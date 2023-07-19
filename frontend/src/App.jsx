@@ -1,15 +1,17 @@
-// import axios from "axios";
-// import { useEffect, useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+import "./index.css";
 
 function App() {
-  // const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${import.meta.env.VITE_BACKEND_URL}/tasks`)
-  //     .then((response) => setTasks(response.data))
-  //     .catch((err) => console.error(err));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/tasks`)
+      .then((response) => setTasks(response.data))
+      .catch((err) => console.error(err));
+  }, []);
   return (
     <div className="bg-gray-900 text-white font-bold">
       <div className="flex-col  h-screen gap-40">
@@ -21,42 +23,75 @@ function App() {
         </nav>
         <div className="flex-col justify-center items-center">
           <h1 className=" text-center text-4xl m-8">Todo App</h1>
-          <div className="flex justify-center">
-            <input
-              type="text"
-              placeholder="Insert your task... and press enter"
-              className="w-6/12 p-1 rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 text-black"
-            />
-          </div>
+          <form className="flex justify-center gap-2">
+            <label htmlFor="">
+              <input
+                type="text"
+                placeholder="Insert your task... and press enter"
+                className="w-6/12 p-1 rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 text-black"
+              />
+            </label>
+            <label htmlFor="">
+              <input type="checkbox" name="isUrgent" id="" className="" />
+            </label>
+            <label htmlFor="">
+              <select name="isUrgent" id="isUrgent">
+                <option value="">Very important</option>
+                <option value="">Important</option>
+                <option value="">Not important at all</option>
+              </select>
+            </label>
+            <button type="submit">Submit</button>
+          </form>
         </div>
         <div className="flex justify-center gap-16">
           <div className="">
-            <h2 className=" text-gray-400 text-xl m-4">Tasks</h2>
+            <h2 className=" text-gray-400 text-xl m-4 text-center">Tasks</h2>
             <ul>
-              <li className="text-center">task 1</li>
+              {tasks &&
+                tasks.map((task) => (
+                  <li key={task.id} className="text-center">
+                    {task.title}
+                  </li>
+                ))}
             </ul>
           </div>
           <div>
-            <h2 className=" text-gray-400 text-xl m-4">Priority</h2>
+            <h2 className=" text-gray-400 text-xl m-4 text-center">Priority</h2>
             <ul>
-              <li className="text-center">true</li>
+              {tasks &&
+                tasks.map((task) => (
+                  <li key={task.id} className="text-center">
+                    {task.is_urgent === 1 ? "Urgent" : "Not Urgent"}
+                  </li>
+                ))}
             </ul>
           </div>
           <div>
-            <h2 className=" text-gray-400 text-xl m-4">Importance</h2>
+            <h2 className=" text-gray-400 text-xl m-4 text-center">
+              Importance
+            </h2>
             <ul>
-              <li className="text-center">A</li>
+              {tasks &&
+                tasks.map((task) => (
+                  <li key={task.id} className="text-center">
+                    {task.importance_id}
+                  </li>
+                ))}
             </ul>
           </div>
           <div>
-            <h2 className=" text-gray-400 text-xl m-4">Operations</h2>
-            <ul className="flex gap-4">
-              <li>
-                <button type="button">Mofify</button>
-              </li>
-              <li className="text-center">
-                <button type="button">Delete</button>
-              </li>
+            <h2 className=" text-gray-400 text-xl m-4 text-center">
+              Operations
+            </h2>
+            <ul className="flex-col gap-6">
+              {tasks &&
+                tasks.map((task) => (
+                  <li key={task.id} className="flex justify-center gap-4">
+                    <button type="button">Mofify</button>
+                    <button type="button">Delete</button>
+                  </li>
+                ))}
             </ul>
           </div>
         </div>
