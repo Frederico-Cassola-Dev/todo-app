@@ -5,13 +5,36 @@ import "./index.css";
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState({
+    title: "",
+    is_urgent: false,
+    importance_id: "",
+  });
+
+  const update = (event) => {
+    const target = event.currentTarget;
+
+    setNewTask({
+      ...newTask,
+      [target.name]: target.type === "checkbox" ? target.checked : target.value,
+    });
+  };
+
+  const submit = (event) => {
+    event.preventDefault();
+
+    axios
+      .post(`${import.meta.env.VITE_BACKEND_URL}/tasks`, newTask)
+      .then((response) => console.info(response))
+      .catch((err) => console.error(err));
+  };
 
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/tasks`)
       .then((response) => setTasks(response.data))
       .catch((err) => console.error(err));
-  }, []);
+  }, [submit]);
   return (
     <div className="bg-gray-900 text-white font-bold">
       <div className="flex-col  h-screen gap-40">
@@ -23,25 +46,45 @@ function App() {
         </nav>
         <div className="flex-col justify-center items-center">
           <h1 className=" text-center text-4xl m-8">Todo App</h1>
-          <form className="flex justify-center gap-2">
-            <label htmlFor="">
+          <form className="flex justify-center gap-6">
+            <label htmlFor="title">
               <input
                 type="text"
+                name="title"
                 placeholder="Insert your task... and press enter"
-                className="w-6/12 p-1 rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 text-black"
+                onChange={update}
+                className="w-96 p-1 rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 text-black cursor-pointer"
               />
             </label>
-            <label htmlFor="">
-              <input type="checkbox" name="isUrgent" id="" className="" />
+            <label htmlFor="" className=" flex gap-2">
+              <span className=" text-xl">Is Urgent </span>
+              <input
+                type="checkbox"
+                name="is_urgent"
+                id=""
+                onChange={update}
+                className="h-8 w-8 rounded-full cursor-pointer"
+              />
             </label>
-            <label htmlFor="">
-              <select name="isUrgent" id="isUrgent">
-                <option value="">Very important</option>
-                <option value="">Important</option>
-                <option value="">Not important at all</option>
+            <label htmlFor="importance_id">
+              <select
+                name="importance_id"
+                id="importance_id"
+                onChange={update}
+                className="p-1 rounded-md text-slate-400 border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 cursor-pointer"
+              >
+                <option disabled value="">
+                  Select importance
+                </option>
+                <option value="1">Very important</option>
+                <option value="2">Important</option>
+                <option value="3">Not important</option>
+                <option value="4">Not important at all</option>
               </select>
             </label>
-            <button type="submit">Submit</button>
+            <button type="submit" onClick={submit}>
+              Submit
+            </button>
           </form>
         </div>
         <div className="flex justify-center gap-16">

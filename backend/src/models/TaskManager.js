@@ -6,9 +6,10 @@ class TaskManager extends AbstractManager {
   }
 
   insert(task) {
-    return this.database.query(`insert into ${this.table} (title) values (?)`, [
-      task.title,
-    ]);
+    return this.database.query(
+      `insert into ${this.table} (title, is_urgent, importance_id) values (?,?,?)`,
+      [task.title, task.is_urgent, parseInt(task.importance_id, 10)]
+    );
   }
 
   update(task) {
