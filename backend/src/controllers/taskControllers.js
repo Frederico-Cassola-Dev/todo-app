@@ -2,7 +2,7 @@ const models = require("../models");
 
 const browse = (req, res) => {
   models.task
-    .findAll()
+    .findAllWithImportanceDescription()
     .then(([rows]) => {
       res.send(rows);
     })
@@ -30,8 +30,6 @@ const read = (req, res) => {
 
 const edit = (req, res) => {
   const task = req.body;
-
-  // TODO validations (length, format...)
 
   task.id = parseInt(req.params.id, 10);
 

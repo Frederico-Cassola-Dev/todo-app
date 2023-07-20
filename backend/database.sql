@@ -7,8 +7,7 @@ DROP TABLE IF EXISTS tasks;
 CREATE TABLE
     importance (
         id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-        title varchar(254) NOT NULL,
-        description varchar(254) NOT NULL
+        title varchar(254) NOT NULL
     ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
 CREATE TABLE
@@ -16,12 +15,13 @@ CREATE TABLE
         id int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
         title varchar(254) NOT NULL,
         is_urgent TINYINT NOT NULL,
-        importance_id varchar(254) NOT NULL
+        importance_id INT NOT NULL,
+        FOREIGN KEY (importance_id) REFERENCES `importance`(id)
     ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
 INSERT INTO
-    importance (title, description)
-VALUES ('A', "Very important"), ('B', "Important"), ('C', "Not important"), ('D', "Not important at all");
+    importance (title)
+VALUES ("Very important"), ("Important"), ("Not important"), ("Not important at all");
 
 INSERT INTO
     tasks (
