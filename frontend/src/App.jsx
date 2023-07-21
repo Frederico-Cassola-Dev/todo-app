@@ -125,27 +125,36 @@ function App() {
     <div className="bg-gray-900 text-white font-bold">
       <div className="flex-col  h-screen gap-40">
         <nav className="flex align-middle justify-center bg-gray-700">
-          <ul className="flex gap-8 m-8">
-            <li>Tasks</li>
-            <li>My profil </li>
+          <ul className="flex text-sm gap-2 m-2 md:text-lg md:gap-8 md:m-8">
+            <li className="hover:scale-105 hover:text-slate-400 cursor-pointer">
+              Tasks
+            </li>
+            <li className="hover:scale-105 hover:text-slate-400 cursor-pointer">
+              My profil{" "}
+            </li>
           </ul>
         </nav>
         <div className="flex-col justify-center items-center">
-          <h1 className=" text-center text-4xl m-8">Todo App</h1>
+          <h1 className=" text-center text-xl m-4 md:text-4xl md:m-8">
+            Todo App
+          </h1>
 
           {showModify.showTheModifyForm ? (
-            <form className="flex justify-center gap-6">
+            <form className=" flex flex-col text-center gap-2 md:flex-row md:justify-center md:gap-6 ">
               <label htmlFor="title">
                 <input
                   type="text"
                   name="title"
-                  placeholder="Modify your task... and press modify"
+                  placeholder="Modify your task... press modify task"
                   onChange={update}
-                  className="w-96 p-1 rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 text-black cursor-pointer"
+                  className=" w-80 md:w-72 p-1 rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 text-black cursor-pointer"
                 />
               </label>
-              <label htmlFor="" className=" flex gap-2">
-                <span className=" text-xl">Is Urgent </span>
+              <label
+                htmlFor=""
+                className=" flex justify-center gap-2 md:flex-row"
+              >
+                <span className="text-base  md:text-lg">Is Urgent </span>
                 <input
                   type="checkbox"
                   name="is_urgent"
@@ -157,7 +166,7 @@ function App() {
                       is_urgent: !selectedTask.is_urgent,
                     }))
                   }
-                  className="h-8 w-8 rounded-full cursor-pointer"
+                  className=" appearance-none h-6 w-6 border-2 border-white checked:bg-slate-500 md:h-8 md:w-8 md:m-0 rounded-full cursor-pointer"
                 />
               </label>
               <label htmlFor="importance_id">
@@ -176,12 +185,18 @@ function App() {
                   <option value="4">Not important at all</option>
                 </select>
               </label>
-              <button type="submit" onClick={submitModify}>
-                Modify
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  onClick={submitModify}
+                  className=" text-lg hover:scale-105 hover:text-slate-400"
+                >
+                  Modify Task
+                </button>
+              </div>
             </form>
           ) : (
-            <form className="flex justify-center gap-6">
+            <form className=" flex flex-col text-center gap-2 md:flex-row md:justify-center md:gap-6 ">
               <label htmlFor="title">
                 <input
                   type="text"
@@ -190,18 +205,21 @@ function App() {
                   value={newTask.title}
                   onChange={update}
                   required
-                  className="w-96 p-1 rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 text-black cursor-pointer"
+                  className=" w-64 md:w-80 p-1 rounded-md border-slate-200 placeholder-slate-400 contrast-more:border-slate-400 contrast-more:placeholder-slate-500 text-black cursor-pointer"
                 />
               </label>
-              <label htmlFor="" className=" flex gap-2">
-                <span className=" text-xl">Is Urgent </span>
+              <label
+                htmlFor=""
+                className=" flex justify-center gap-2 md:flex-row "
+              >
+                <span className="text-base  md:text-lg">Is Urgent </span>
                 <input
                   type="checkbox"
                   name="is_urgent"
                   checked={newTask.is_urgent}
                   onChange={update}
                   required
-                  className="h-8 w-8 rounded-full cursor-pointer"
+                  className=" appearance-none h-6 w-6 border-2 border-white checked:bg-slate-500 md:h-8 md:w-8 md:m-0 rounded-full cursor-pointer"
                 />
               </label>
               <label htmlFor="importance_id">
@@ -222,9 +240,15 @@ function App() {
                   <option value="4">Not important at all</option>
                 </select>
               </label>
-              <button type="submit" onClick={submit}>
-                Add
-              </button>
+              <div>
+                <button
+                  type="submit"
+                  onClick={submit}
+                  className=" text-lg hover:scale-105 hover:text-slate-400"
+                >
+                  Add
+                </button>
+              </div>
             </form>
           )}
         </div>
@@ -249,7 +273,7 @@ function App() {
                   ))}
             </ul>
           </div>
-          <div>
+          <div className=" hidden md:flex md:flex-col">
             <h2 className=" text-gray-400 text-xl m-4 text-center">Priority</h2>
             <ul>
               {tasks &&
@@ -260,7 +284,7 @@ function App() {
                 ))}
             </ul>
           </div>
-          <div>
+          <div className=" hidden md:flex md:flex-col">
             <h2 className=" text-gray-400 text-xl m-4 text-center">
               Importance
             </h2>
@@ -281,10 +305,18 @@ function App() {
               {tasks &&
                 tasks.map((task) => (
                   <li key={task.id} className="flex justify-center gap-4">
-                    <button type="button" onClick={() => modifyTask(task.id)}>
+                    <button
+                      type="button"
+                      onClick={() => modifyTask(task.id)}
+                      className="hover:scale-105 hover:text-slate-400"
+                    >
                       Modify
                     </button>
-                    <button type="button" onClick={() => removeTask(task.id)}>
+                    <button
+                      type="button"
+                      onClick={() => removeTask(task.id)}
+                      className="hover:scale-105 hover:text-slate-400"
+                    >
                       Delete
                     </button>
                   </li>
