@@ -50,7 +50,7 @@ const edit = (req, res) => {
 
 const add = (req, res) => {
   const task = req.body;
-
+  // console.log("This is the req body: ", req)
   // TODO validations (length, format...)
 
   models.task
