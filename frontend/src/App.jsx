@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 import "./index.css";
 
 function App() {
-  const tasksQuery = useQuery({
+  const todosQuery = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
       const response = await fetch("http://127.0.0.1:5000/tasks");
@@ -49,8 +49,8 @@ function App() {
     });
   };
 
-  const submit = (event) => {
-    event.preventDefault();
+  const submit = () => {
+    // event.preventDefault();
     if (newTask.title !== "" && newTask.importance_id !== "") {
       if (newTask.is_urgent === "") {
         axios
@@ -83,6 +83,11 @@ function App() {
       }
     }
   };
+
+  const { mutateAsync: addTodoMutation } = useMutation({
+    mutationFn: submit(),
+  });
+
   const submitModify = (event) => {
     event.preventDefault();
 
@@ -251,8 +256,8 @@ function App() {
               </label>
               <div>
                 <button
-                  type="submit"
-                  onClick={submit}
+                  type="button"
+                  onClick={addTodoMutation}
                   className=" text-lg hover:scale-105 hover:text-slate-400"
                 >
                   Add
@@ -265,8 +270,8 @@ function App() {
           <div className="">
             <h2 className=" text-gray-400 text-xl m-4 text-center">Tasks</h2>
             <ul>
-              {tasksQuery.data &&
-                tasksQuery.data
+              {todosQuery.data &&
+                todosQuery.data
                   .sort((a, b) => (a.id > b.id ? 1 : -1))
                   .map((task) => (
                     <li
@@ -298,8 +303,8 @@ function App() {
               Importance
             </h2>
             <ul>
-              {tasksQuery &&
-                tasksQuery.data.map((task) => (
+              {todosQuery.data &&
+                todosQuery?.data.map((task) => (
                   <li key={task.id} className="text-center">
                     {task.importance_title}
                   </li>
