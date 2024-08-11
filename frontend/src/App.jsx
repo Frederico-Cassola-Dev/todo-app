@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import "./index.css";
 
 function App() {
+  const queryClient = useQueryClient();
   const todosQuery = useQuery({
-    queryKey: ["tasks"],
+    queryKey: ["todos"],
     queryFn: async () => {
       const response = await fetch("http://127.0.0.1:5000/tasks");
       return response.json();
@@ -84,8 +85,11 @@ function App() {
     }
   };
 
-  const { mutateAsync: addTodoMutation } = useMutation({
+  const addTodoMutation = useMutation({
     mutationFn: submit(),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["todos"]);
+    },
   });
 
   const submitModify = (event) => {
@@ -257,7 +261,7 @@ function App() {
               <div>
                 <button
                   type="button"
-                  onClick={addTodoMutation}
+                  onClick={() => addTodoMutation()}
                   className=" text-lg hover:scale-105 hover:text-slate-400"
                 >
                   Add
