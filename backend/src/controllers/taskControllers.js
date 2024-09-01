@@ -50,10 +50,14 @@ const edit = (req, res) => {
 
 const add = (req, res) => {
   const task = req.body;
-  // console.log("This is the req body: ", req)
-  // TODO validations (length, format...)
 
-  models.task
+  if (task.title === "") {
+    return res.json({
+      errorMessage: "There are no data to create the task",
+      status: 404,
+    });
+  }
+  return models.task
     .insert(task)
     .then(() => {
       res.sendStatus(201);
