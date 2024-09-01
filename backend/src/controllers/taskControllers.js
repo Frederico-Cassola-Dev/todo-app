@@ -54,7 +54,7 @@ const add = (req, res) => {
   if (task.title === "") {
     return res.json({
       errorMessage: "There are no data to create the task",
-      status: 404,
+      statusCode: 404,
     });
   }
   return models.task
@@ -69,7 +69,13 @@ const add = (req, res) => {
 };
 
 const destroy = (req, res) => {
-  models.task
+  if (req.params.id === "undefined") {
+    return res.json({
+      errorMessage: "There are no task to delete",
+      statusCode: 404,
+    });
+  }
+  return models.task
     .delete(req.params.id)
     .then(([result]) => {
       if (result.affectedRows === 0) {
