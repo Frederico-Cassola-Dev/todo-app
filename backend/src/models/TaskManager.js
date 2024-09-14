@@ -7,7 +7,7 @@ class TaskManager extends AbstractManager {
 
   findAllWithImportanceDescription() {
     return this.database.query(
-      `SELECT ${this.table}.id, ${this.table}.title, ${this.table}.is_urgent, ${this.table}.importance_id, importance.title importance_title FROM ${this.table}
+      `SELECT ${this.table}.id, ${this.table}.title, ${this.table}.description, ${this.table}.created_at, ${this.table}.end_date, ${this.table}.is_urgent, ${this.table}.importance_id, importance.title importance_title FROM ${this.table}
        INNER JOIN importance ON importance.id = ${this.table}.importance_id`
     );
   }
