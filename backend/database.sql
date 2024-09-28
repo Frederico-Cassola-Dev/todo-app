@@ -16,8 +16,9 @@ CREATE TABLE
     description varchar(254),
     created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     end_date DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    is_urgent TINYINT,
     importance_id INT,
+    is_urgent TINYINT,
+    image_url varchar(254),
     FOREIGN KEY (importance_id) REFERENCES `importance` (id)
   ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
@@ -36,7 +37,8 @@ INSERT INTO
     created_at,
     end_date,
     is_urgent,
-    importance_id
+    importance_id,
+    image_url 
   )
 VALUES
   (
@@ -45,7 +47,8 @@ VALUES
     CURRENT_TIMESTAMP,
     null,
     0,
-    1
+    1,
+    null
   ),
   (
     'Clean house',
@@ -53,7 +56,8 @@ VALUES
     CURRENT_TIMESTAMP,
     null,
     1,
-    2
+    2,
+    null
   ),
   (
     'Clean desk',
@@ -61,7 +65,8 @@ VALUES
     CURRENT_TIMESTAMP,
     null,
     0,
-    3
+    3,
+    null
   ),
   (
     'Go shopping',
@@ -69,7 +74,8 @@ VALUES
     CURRENT_TIMESTAMP,
     null,
     1,
-    2
+    2,
+    null
   ),
   (
     'Study classes',
@@ -77,7 +83,8 @@ VALUES
     CURRENT_TIMESTAMP,
     null,
     0,
-    3
+    3,
+    null
   ),
   (
     'Talk with boss about dentiste',
@@ -85,6 +92,7 @@ VALUES
     CURRENT_TIMESTAMP,
     null,
     1,
-    2
+    2,
+    null
   ),
-  ('Buy pc', 'By a pc to use windows 11', CURRENT_TIMESTAMP, null, 0, 3);
+  ('Buy pc', 'By a pc to use windows 11', CURRENT_TIMESTAMP, null, 0, 3, null);

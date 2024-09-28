@@ -7,22 +7,21 @@ class TaskManager extends AbstractManager {
 
   findAllWithImportanceDescription() {
     return this.database.query(
-      `SELECT ${this.table}.id, ${this.table}.title, ${this.table}.description, ${this.table}.created_at, ${this.table}.end_date, ${this.table}.is_urgent, ${this.table}.importance_id, importance.title importance_title FROM ${this.table}
+      `SELECT ${this.table}.id, ${this.table}.title, ${this.table}.description, ${this.table}.created_at, ${this.table}.end_date, ${this.table}.is_urgent, ${this.table}.importance_id, importance.title importance_title, ${this.table}.image_url FROM ${this.table}
        INNER JOIN importance ON importance.id = ${this.table}.importance_id`
     );
   }
 
   insert(task) {
     return this.database.query(
-      `insert into ${this.table} (title, description, created_at, is_urgent, importance_id) values (?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (title, description, created_at, is_urgent, importance_id, image_url) values (?, ?, ?, ?, ?, ?)`,
       [
         task.title,
         task.description,
-        // task.created_at,
         null,
-        // null,
         task.is_urgent,
         parseInt(task.importance_id, 10),
+        task.image_url,
       ]
     );
   }
