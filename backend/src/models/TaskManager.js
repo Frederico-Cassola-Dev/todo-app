@@ -14,11 +14,10 @@ class TaskManager extends AbstractManager {
 
   insert(task) {
     return this.database.query(
-      `insert into ${this.table} (title, description, created_at, is_urgent, importance_id, image_url) values (?, ?, ?, ?, ?, ?)`,
+      `insert into ${this.table} (title, description, is_urgent, importance_id, image_url) values (?, ?, ?, ?, ?)`,
       [
         task.title,
         task.description,
-        null,
         task.is_urgent,
         parseInt(task.importance_id, 10),
         task.image_url,
